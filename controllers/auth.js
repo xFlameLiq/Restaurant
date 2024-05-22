@@ -1,10 +1,10 @@
-const { findByUsername } = require("../services/admin");
+const { findByUsername } = require("../services/employee");
 const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken");
 
 exports.login = async (request, response) => {
-    const { username, password } = request.body;
-    const user = await findByUsername(username);
+    const { email, password } = request.body;
+    const user = await findByUsername(email);
 
     if(!user || !bcrypt.compareSync(password, user.password)) {
         return response.status(400).json({
@@ -14,7 +14,7 @@ exports.login = async (request, response) => {
         })
     }
 
-    const token = jwt.sign({id: user.id, username: user.username}, process.env.JWT_SECRET);
+    const token = jwt.sign({id: user.id, name: user.name}, process.env.JWT_SECRET);
     response.status(200).json({
         code: "SUCCESS_AUTH",
         jwt: token,

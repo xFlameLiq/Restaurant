@@ -45,3 +45,11 @@ exports.update = async function (id, data) {
     },
   });
 };
+
+exports.findByUsername = function (email) {
+  return Employee.findOne({
+      where: {
+          email
+      },
+  });
+};

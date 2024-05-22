@@ -35,9 +35,9 @@ exports.getEmployeeById = async function(request, response){
 }
 
 exports.insertEmployee = async function(request, response) {
-    const {name, password} = request.body;
+    const {name, email, password} = request.body;
     try {
-        const employee = await createEmployee({name, password});
+        const employee = await createEmployee({name, email, password});
         response.status(201).json(employee);
     } catch(e) {
         response.status(500).json({
